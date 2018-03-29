@@ -14,6 +14,7 @@
    #from my_module import twoPointSixCode
 import sys
 import re
+import json
 
 exit_01 = "You can press the Y key and exit the program of this service!\n\n"
 print(exit_01)
@@ -27,9 +28,9 @@ age = input(name+", how old are you?\n\n")
 if str (age) == 'y':
         quit()
 
-import json
-filename = "menu_kfc.txt"
-myfile = open(filename, mode ='w', encoding='utf-8')
+
+
+
 
 if int (age) > 17:
     country = input ("Well, our service only works for minors. We work with the countries of northern Europe:\n\n 1.Denmark,\n 2.Sweden,\n 3.Finland,\n 4.Norway, \n\nWhere are you?\n\n")
@@ -42,8 +43,11 @@ if int (age) > 17:
             '0': 'Kapusta s vodoy - 1$',
             '1': 'Kapusta bez vodi - 0,36$',
             '2': 'Voda bez kapusti - 0,75$', 
-                                }
-        print(menu_list_01)
+        }
+        for key, value in menu_list_01.items():
+                print(key + ":" + value)
+                            
+        #print(menu_list_01)
       
         denmark_dialog_01 = input("Here is your menu, сhoose a position from the list above:\n\n")
         if str (denmark_dialog_01) == 'y':
@@ -55,7 +59,7 @@ if int (age) > 17:
         if int (denmark_dialog_01) == 2:
                 print(menu[2])
 
-        time = input ("Thank you for your choice, food delivery will be at 15:00, is it convenient for you at this time? Yes \ No\n\n")
+        time = input ("Thank you for your choice, food delivery will be at 15:00, is it convenient for you at this time?")
         if str (time) == 'y':
                 quit()
         if str (time) == "Yes":
@@ -69,7 +73,7 @@ if int (age) > 17:
                 'Menu': denmark_dialog_01,
                 'Time order': kfc_order,
                 }
-                json.dump (json_list, myfile)
+
 
                 print("The application is accepted, your order will be delivered to "+(kfc_order)+". Thank you, your KFC!")
                 
@@ -77,5 +81,11 @@ if int (age) > 17:
             print ("Our system does not work with this country")
 else:
         print ("Sorry, you have not reached adulthood, you are not available for the service function. Run to your mother!")
+
+filename = "menu_kfc.json"
+#myfile = open(filename, mode ='w', encoding='utf-8')
+
+with open(filename, "a") as myfile:
+        json.dump (json_list, myfile)
 
 input("\n\n Click Enter to exit!")
