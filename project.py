@@ -5,37 +5,77 @@
 # 1.0                24.03.2018
 #----------------------------------
 
+#import sys
+#sys.version_info
+#(2, 6, 4, 'final', 0)
+#if not sys.version_info[:2] == (2, 6):
+ #       print "Error, I need python 2.6"
+#else:
+   #from my_module import twoPointSixCode
+import sys
+import re
 
-name = input("Здравствуйте, вас приветствует сеть международная сеть KFC, как вас зовут?\n\n")
-age = input(name+", сколько вам лет?\n\n")
+exit_01 = "You can press the Y key and exit the program of this service!\n\n"
+print(exit_01)
+print (sys.version)
+
+
+name = input("\nHello, you are greeted by the KFC international network, what is your name?\n\n")
+if str (name) == 'y':
+        quit()
+age = input(name+", how old are you?\n\n")
+if str (age) == 'y':
+        quit()
+
+import json
+filename = "menu_kfc.txt"
+myfile = open(filename, mode ='w', encoding='utf-8')
 
 if int (age) > 17:
-    country = input ("Хорошо, наш сервис работает только для совершннолетних лиц. Мы работаем со странами северной Европы, где вы находитесь?\n\n")
-    country_list = ['Дания', 'Швеция', 'Норвегия', 'Финляндия']
-
-    if country in country_list: 
-                  
-        menu = ['Капуста с водой - 1$', 'Вода без капусты - 0,36$', 'Капуста без воды - 0,75$']
-        
-        denmark_dialog_01 = input("Вот ваше меню, введите номер позиции из предоставленого вам списка:\n\n№0 - Капуста с водой\n№1 - Вода без капусты\n№2 - Капуста без воды\n\n")
-        
+    country = input ("Well, our service only works for minors. We work with the countries of northern Europe:\n\n 1.Denmark,\n 2.Sweden,\n 3.Finland,\n 4.Norway, \n\nWhere are you?\n\n")
+    if str (country) == 'y':
+        quit()
+    country_list = ['1', '2', '3', '4']
+    if country in country_list:                
+        menu = ['Kapusta s vodoy - 1$', 'Kapusta bez vodi - 0,36$', 'Voda bez kapusti - 0,75$']
+        menu_list_01 = {
+            '0': 'Kapusta s vodoy - 1$',
+            '1': 'Kapusta bez vodi - 0,36$',
+            '2': 'Voda bez kapusti - 0,75$', 
+                                }
+        print(menu_list_01)
+      
+        denmark_dialog_01 = input("Here is your menu, сhoose a position from the list above:\n\n")
+        if str (denmark_dialog_01) == 'y':
+                quit()
         if int (denmark_dialog_01) == 0:
-            print(menu[0])
+                print(menu[0])
         if int (denmark_dialog_01) == 1:
                 print(menu[1])
         if int (denmark_dialog_01) == 2:
                 print(menu[2])
 
-        time = input ("Спасибо за ваш выбор, доставка еды будет в 15:00, вам удобно в это время? Да\Нет\n\n")
-        if str (time) == "Да":
-                print("Заявка принята, ваш заказ обрабатывается модераторами :)")
-        if str (time) == "Нет":
-                kfc_order = input("Тогда давайте придумаем время доставки удобное для вас:\n\n")
-                print("Заявка принята, ваш заказ будет доставлен в "+(kfc_order)+". Спасибо, ваш KFC!")
+        time = input ("Thank you for your choice, food delivery will be at 15:00, is it convenient for you at this time? Yes \ No\n\n")
+        if str (time) == 'y':
+                quit()
+        if str (time) == "Yes":
+                print("Application accepted, your order is processed by moderators :)")
+        if str (time) == "No":
+                kfc_order = input("Then let's come up with a convenient delivery time for you:\n\n")
+                json_list = {
+                'Name': name,
+                'Age': age,
+                'Country': country,
+                'Menu': denmark_dialog_01,
+                'Time order': kfc_order,
+                }
+                json.dump (json_list, myfile)
+
+                print("The application is accepted, your order will be delivered to "+(kfc_order)+". Thank you, your KFC!")
+                
     else:
-            print ("Наша система не работает с этой страной")
+            print ("Our system does not work with this country")
 else:
-        print ("Извините, вы не достигли совершеннолетия, вам не доступны функции сервиса. Бегите к мамке!")
+        print ("Sorry, you have not reached adulthood, you are not available for the service function. Run to your mother!")
 
-
-input("\n\nНажмите любую клавишу чтобы выйти .")
+input("\n\n Click Enter to exit!")
